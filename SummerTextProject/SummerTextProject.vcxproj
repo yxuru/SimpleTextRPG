@@ -132,6 +132,7 @@
     <ClCompile Include="PlayerOwnedStates.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Locations.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerOwnedStates.h" />

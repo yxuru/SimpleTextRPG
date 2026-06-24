@@ -5,8 +5,8 @@
 // Create player object
 	// here go initial parameters / attributes
 	
-	Player::Player(int id):BaseGameEntity(id),
-		m_location(town)
+	//Player::Player(int id):BaseGameEntity(id),
+	//	m_location(town)
 
 
 

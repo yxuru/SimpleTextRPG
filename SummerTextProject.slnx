@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="SummerTextProject/SummerTextProject.vcxproj" />
+  <Project Path="SummerTextProject/SummerTextProject.vcxproj" Id="f4a536cf-e6af-4547-a1fa-b857d482352c" />
 </Solution>
