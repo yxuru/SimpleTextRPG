@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Locations.h"
 #include "PlayerOwnedStates.h"
+#include <stdlib.h>
+#include <ctime>
 
 
 
@@ -22,6 +24,7 @@ int main()
             break;
 
         case GameState::Encounter:
+            srand(time(nullptr));
             Encounter(currentState);
             break;
         }

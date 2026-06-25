@@ -2,7 +2,7 @@
 #include "Locations.h"
 #include "PlayerOwnedStates.h"
 #include <iostream>
-
+#include "Enemy.h"
 #include <thread>
 
 void Town(GameState& currentState) {
@@ -57,8 +57,10 @@ void Forest(GameState& currentState) {
 void Encounter(GameState& currentState) {
 
 	int choice;
+	int size = static_cast<int>(Enemies::EnemyFinal);
+	Enemies currentEnemy = static_cast<Enemies>(rand() % size);
 
-	std::cout << "A Goblin hath appeared!!" << "\n1. Attack \n2. Run away\n";
+	std::cout << "A " << EnemyToString(currentEnemy) << " hath appeared!!" << "\n1.Attack \n2.Run away\n";     // RANDOM ENEMY INSERT HERE
 
 	std::cin >> choice;
 
