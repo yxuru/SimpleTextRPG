@@ -13,6 +13,7 @@ int main()
 
     while (currentState != GameState::Quit)
     {
+        srand(time(nullptr));
         switch (currentState)
         {
         case GameState::Town:
@@ -24,7 +25,7 @@ int main()
             break;
 
         case GameState::Encounter:
-            srand(time(nullptr));
+            
             Encounter(currentState);
             break;
         }
