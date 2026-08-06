@@ -15,6 +15,7 @@ bool DataManager::LoadGameAssets()
         weapons =
             LoadJsonArray<Weapon>("Weapons.json");
 
+        
         return true;
     }
     catch (const std::exception& error)

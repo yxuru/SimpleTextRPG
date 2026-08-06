@@ -1,8 +1,8 @@
 #pragma once
 #include "Locations.h"
 
-class DataManager;
+class GameContext;
 
-void Town(GameState& currentState, DataManager& dataManager);
-void Forest(GameState& currentState, DataManager& dataManager);
-void Encounter(GameState& currentState, DataManager& dataManager);
+void Town(GameState& currentState, GameContext& game);
+void Forest(GameState& currentState, GameContext& game);
+void Encounter(GameState& currentState, GameContext& game);

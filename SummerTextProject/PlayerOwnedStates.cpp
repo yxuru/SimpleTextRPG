@@ -4,13 +4,13 @@
 #include <iostream>
 #include "Enemy.h"
 #include <thread>
-#include "DataManager.h"
+#include "GameContext.h"
 
-void Town(GameState& currentState, DataManager& dataManager) {
+void Town(GameState& currentState, GameContext& game) {
 
 	int choice;
 
-	std::cout << "----Town of Luondle----" << "\nChoose your adventure..." << "\n1. Enter Forest \n2. Quit\n";
+	std::cout << "----Town of Luondle----" << "\nChoose your adventure..." << "\n1. Enter Forest \n2. Enter the Inn\n3. Quit\n";
 	
 	std::cin >> choice;
 
@@ -23,14 +23,30 @@ void Town(GameState& currentState, DataManager& dataManager) {
 	else if (choice == 1)
 		currentState = GameState::Forest;
 
-	else if (choice == 2)
+	else if (choice == 3)
 		currentState = GameState::Quit;
+
+	else {
+		std::cout << "Welcome to the inn. Would you like to shop [1] or rest [2]?\n";
+		std::cin >> choice;
+		if (choice == 1) {
+			std::cout << "You currently have " << game.player.gold << " gold.";
+		}
+		else if (choice == 2) {
+
+		}
+		else {
+			std::cout << "Curse thee!";
+			std::this_thread::sleep_for(std::chrono::seconds(3));
+			currentState = GameState::Quit;
+		}
+	}
 
 }
 
 
 
-void Forest(GameState& currentState, DataManager& dataManager) {
+void Forest(GameState& currentState, GameContext& game) {
 
 
 	int choice;
@@ -55,14 +71,13 @@ void Forest(GameState& currentState, DataManager& dataManager) {
 
 
 
-void Encounter(GameState& currentState, DataManager& dataManager) {
+void Encounter(GameState& currentState, GameContext& game) {
 
 	int choice;
-	const std::vector<Enemy> enemies = dataManager.GetEnemies();
+	const std::vector<Enemy> enemies = game.assets.GetEnemies();
 
 	size_t size = enemies.size(); // Get size of enemy list for ids
-	Enemy selectedEnemy = enemies[rand() % size]; // grab a random enemy id
-	Enemy currentEnemy = selectedEnemy; // create a copy of template
+	Enemy currentEnemy = enemies.at(rand() % size); // create a copy of template
 
 	std::cout << "A " << currentEnemy.name << " hath appeared!!\n";     // RANDOM ENEMY INSERT HERE
 	bool escaped{ false };

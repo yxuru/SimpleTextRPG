@@ -140,14 +140,17 @@
     <ClCompile Include="PlayerOwnedStates.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Player.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameContext.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="JsonLoader.h" />
     <ClInclude Include="Locations.h" />
     <ClInclude Include="PlayerOwnedStates.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Player.json" />
     <None Include="Enemies.json" />
     <None Include="Weapons.json" />
   </ItemGroup>
