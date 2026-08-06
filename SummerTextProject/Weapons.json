@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Wooden Sword",
+    "damage": 1,
+    "cost": 0
+  },
+  {
+    "name": "Iron Sword",
+    "damage": 5,
+    "cost": 10
+  }
+]

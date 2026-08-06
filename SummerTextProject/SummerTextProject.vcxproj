@@ -77,6 +77,8 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,6 +94,8 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,6 +109,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,6 +126,8 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,16 +135,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerOwnedStates.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="JsonLoader.h" />
     <ClInclude Include="Locations.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerOwnedStates.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Enemies.json" />
+    <None Include="Weapons.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

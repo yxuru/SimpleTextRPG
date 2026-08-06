@@ -1,14 +1,26 @@
-
-#include "Player.h"
 #include "Locations.h"
 #include "PlayerOwnedStates.h"
 #include <stdlib.h>
 #include <ctime>
-
+#include "DataManager.h"
 
 
 int main()
 {
+    DataManager dataManager;
+
+    if (!dataManager.LoadGameAssets())
+    {
+        return 1;
+    }
+
+    const std::vector<Enemy>& enemies =
+        dataManager.GetEnemies();
+
+    const std::vector<Weapon>& weapons =
+        dataManager.GetWeapons();
+
+
     GameState currentState = GameState::Town;
 
     while (currentState != GameState::Quit)
@@ -17,16 +29,16 @@ int main()
         switch (currentState)
         {
         case GameState::Town:
-            Town(currentState);
+            Town(currentState, dataManager);
             break;
 
         case GameState::Forest:
-            Forest(currentState);
+            Forest(currentState, dataManager);
             break;
 
         case GameState::Encounter:
             
-            Encounter(currentState);
+            Encounter(currentState, dataManager);
             break;
         }
     }
