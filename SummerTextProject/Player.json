@@ -2,6 +2,7 @@
   {
     "name": "Aislo",
     "health": 10,
+    "maxHealth": 10,
     "defense": 2,
     "attack": 3,
     "gold": 0

@@ -24,6 +24,7 @@
     <ProjectGuid>{f4a536cf-e6af-4547-a1fa-b857d482352c}</ProjectGuid>
     <RootNamespace>SummerTextProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SimpleTextRPG</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
