@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include <thread>
 #include "GameContext.h"
+#include "Combat.h"
 
 void Town(GameState& currentState, GameContext& game) {
 
@@ -87,6 +88,39 @@ void Encounter(GameState& currentState, GameContext& game) {
 	Enemy currentEnemy = enemies.at(rand() % size); // create a copy of template
 
 	std::cout << "A " << currentEnemy.name << " hath appeared!!\n";     // RANDOM ENEMY INSERT HERE
+
+	while (game.player.health > 0 && currentEnemy.health > 0)
+	{
+		CombatAction playerAction = getPlayerAction();
+		resolveAction(playerAction, game.player, currentEnemy, 1);
+
+		if (currentEnemy.isAlive())
+		{
+			CombatAction enemyAction = enemyAI.chooseAction(currentEnemy, game.player);         // Implement enemy choice ai 
+
+			resolveAction(enemyAction, game.player, currentEnemy, 2);
+		}
+	}
+
+	if (game.player.health < 1)
+	{
+		std::cout << game.player.name << " was defeated and retreats back to the village!\n";
+		game.player.health = game.player.maxHealth;
+		currentState = GameState::Town;
+	}
+	else
+	{
+		std::cout << game.player.name << " defeated the " << currentEnemy.name << "!\n You recieve " << currentEnemy.gold << " gold!\n";
+		currentState = GameState::Forest;
+	}
+
+	/*
+
+	while (isAlive(currentEnemy)) {
+		playerCombat();
+		enemyCombat();
+	}
+
 	bool escaped{ false };
 
 	while (currentEnemy.health > 0 && !escaped) 
@@ -159,6 +193,6 @@ void Encounter(GameState& currentState, GameContext& game) {
 		
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	currentState = GameState::Forest;
-
+	*/
 }
 

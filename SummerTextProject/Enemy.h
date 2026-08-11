@@ -8,6 +8,12 @@ struct Enemy
 	int health;
 	int attack;
 	int gold;
+
+	bool isAlive() const
+	{
+		return health > 0;
+	}
+
 };
 
 
