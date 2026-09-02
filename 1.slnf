@@ -1,0 +1,8 @@
+{
+  "solution": {
+    "path": "SimpleTextRPG.slnx",
+    "projects": [
+      "SummerTextProject\\SummerTextProject.vcxproj"
+    ]
+  }
+}
