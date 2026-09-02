@@ -6,6 +6,7 @@ struct Enemy
 {
 	std::string name;
 	int health;
+	int maxHealth;
 	int attack;
 	int gold;
 
@@ -21,6 +22,7 @@ inline void from_json(const nlohmann::json& json, Enemy& enemy)
 {
 	json.at("name").get_to(enemy.name);
 	json.at("health").get_to(enemy.health);
+	json.at("maxHealth").get_to(enemy.maxHealth);
 	json.at("attack").get_to(enemy.attack);
 	json.at("gold").get_to(enemy.gold);
 }

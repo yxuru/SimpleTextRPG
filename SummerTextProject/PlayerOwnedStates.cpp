@@ -6,6 +6,7 @@
 #include <thread>
 #include "GameContext.h"
 #include "Combat.h"
+#include "EnemyAI.h"
 
 void Town(GameState& currentState, GameContext& game) {
 
@@ -79,120 +80,99 @@ void Forest(GameState& currentState, GameContext& game) {
 
 
 
-void Encounter(GameState& currentState, GameContext& game) {
+void Encounter(GameState& currentState, GameContext& game)
+{
+    const std::vector<Enemy>& enemies = game.assets.GetEnemies();
 
-	int choice;
-	const std::vector<Enemy> enemies = game.assets.GetEnemies();
+    if (enemies.empty())
+    {
+        std::cout << "There are no enemies to encounter!\n";
+        currentState = GameState::Forest;
+        return;
+    }
 
-	size_t size = enemies.size(); // Get size of enemy list for ids
-	Enemy currentEnemy = enemies.at(rand() % size); // create a copy of template
+    size_t size = enemies.size();
 
-	std::cout << "A " << currentEnemy.name << " hath appeared!!\n";     // RANDOM ENEMY INSERT HERE
+    // Copy the enemy template so its health can change during combat.
+    Enemy currentEnemy = enemies.at(rand() % size);
 
-	while (game.player.health > 0 && currentEnemy.health > 0)
-	{
-		CombatAction playerAction = getPlayerAction();
-		resolveAction(playerAction, game.player, currentEnemy, 1);
+    std::cout << "A " << currentEnemy.name
+        << " hath appeared!!\n";
 
-		if (currentEnemy.isAlive())
-		{
-			CombatAction enemyAction = enemyAI.chooseAction(currentEnemy, game.player);         // Implement enemy choice ai 
+    EnemyAI enemyAI;
 
-			resolveAction(enemyAction, game.player, currentEnemy, 2);
-		}
-	}
+    bool playerEscaped = false;
+    bool enemyEscaped = false;
 
-	if (game.player.health < 1)
-	{
-		std::cout << game.player.name << " was defeated and retreats back to the village!\n";
-		game.player.health = game.player.maxHealth;
-		currentState = GameState::Town;
-	}
-	else
-	{
-		std::cout << game.player.name << " defeated the " << currentEnemy.name << "!\n You recieve " << currentEnemy.gold << " gold!\n";
-		currentState = GameState::Forest;
-	}
+    while (game.player.health > 0 &&
+        currentEnemy.health > 0 &&
+        !playerEscaped &&
+        !enemyEscaped)
+    {
+        // Player's turn
+        CombatAction playerAction = getPlayerAction();
 
-	/*
+        playerEscaped = resolveAction(
+            playerAction,
+            game.player,
+            currentEnemy,
+            1
+        );
 
-	while (isAlive(currentEnemy)) {
-		playerCombat();
-		enemyCombat();
-	}
+        // Do not give the enemy a turn if the player escaped
+        // or the enemy was defeated.
+        if (playerEscaped || !currentEnemy.isAlive())
+        {
+            break;
+        }
 
-	bool escaped{ false };
+        // Enemy's turn
+        CombatAction enemyAction =
+            enemyAI.chooseAction(currentEnemy, game.player);
 
-	while (currentEnemy.health > 0 && !escaped) 
-	{
-	
-	std::cout << "1.Attack \n2.Run Away\n";
+        enemyEscaped = resolveAction(
+            enemyAction,
+            game.player,
+            currentEnemy,
+            2
+        );
+    }
 
-	std::cin >> choice;
+    if (playerEscaped)
+    {
+        std::cout << game.player.name
+            << " escaped from the "
+            << currentEnemy.name << "!\n";
 
-	if (choice != 1 && choice != 2) {
-		std::cout << "Curse thee!";
-		std::this_thread::sleep_for(std::chrono::seconds(2));
-		currentState = GameState::Quit;
-	}
+        currentState = GameState::Forest;
+    }
+    else if (enemyEscaped)
+    {
+        std::cout << "The " << currentEnemy.name
+            << " escaped from battle!\n";
 
-	else if (choice == 1) {
-		std::cout << game.player.name << " swings at the enemy!\n";
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		currentEnemy.health -= game.player.attack;			// add a chance here
-		std::cout << game.player.name << " damages the " << currentEnemy.name << " for " << game.player.attack << " health!\n";
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		if (currentEnemy.health < 0) {
-			currentEnemy.health = 0;
-			std::cout << "The " << currentEnemy.name << " has been defeated!\n";
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-			break;
-		}
-		std::cout << "The " << currentEnemy.name << " currently has " << currentEnemy.health << " health remaining.\n";
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		std::cout << "The " << currentEnemy.name << " swings at " << game.player.name << "!\n";
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		game.player.health -= currentEnemy.attack;         // add a chance here
-		if (game.player.health < 0) {
-			game.player.health = 0;
-			std::cout << game.player.name << " has been defeated! You must flee!\n";
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-			break;
-		}
-		std::cout << game.player.name << " has " << game.player.health << " health remaining!\n";
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-	}
+        currentState = GameState::Forest;
+    }
+    else if (game.player.health < 1)
+    {
+        std::cout << game.player.name
+            << " was defeated and retreats back "
+            "to the village!\n";
 
-	else if (choice == 2)
-		if (rand() % 3 == 0) {
-			std::cout << "You failed to escape!\n";
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-			std::cout << "The " << currentEnemy.name << " swings at " << game.player.name << "!\n";
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-			game.player.health -= currentEnemy.attack;         // add a chance here
-			if (game.player.health < 0) {
-				game.player.health = 0;
-				std::cout << game.player.name << " has been defeated! You must flee!\n";
-				std::this_thread::sleep_for(std::chrono::seconds(1));
-				break;
-			}
-			std::cout << game.player.name << " has " << game.player.health << " health remaining!\n";
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-		}
-		else
-			escaped = true;
-		
-	}
+        game.player.health = game.player.maxHealth;
+        currentState = GameState::Town;
+    }
+    else
+    {
+        std::cout << game.player.name
+            << " defeated the "
+            << currentEnemy.name << "!\n"
+            << "You receive "
+            << currentEnemy.gold << " gold!\n";
 
-	if (!escaped) {
-		std::cout << "You win! Here is your reward... " << currentEnemy.gold << " gold.\n";
-		game.player.gold += currentEnemy.gold;
-	}
-	else
-		std::cout << "You escaped! Better be careful out here...\n";
-		
-	std::this_thread::sleep_for(std::chrono::seconds(2));
-	currentState = GameState::Forest;
-	*/
+        game.player.gold += currentEnemy.gold;
+
+        currentState = GameState::Forest;
+    }
 }
 

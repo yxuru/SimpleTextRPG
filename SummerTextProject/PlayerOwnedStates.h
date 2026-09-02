@@ -1,7 +1,7 @@
 #pragma once
 #include "Locations.h"
 
-class GameContext;
+struct GameContext;
 
 void Town(GameState& currentState, GameContext& game);
 void Forest(GameState& currentState, GameContext& game);

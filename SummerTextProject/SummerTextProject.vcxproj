@@ -139,11 +139,13 @@
     <ClCompile Include="Combat.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerOwnedStates.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Combat.h" />
+    <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="Enemy.h" />

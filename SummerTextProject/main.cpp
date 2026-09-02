@@ -41,9 +41,11 @@ int main()
 
     GameState currentState = GameState::Town;
 
+    srand(static_cast<unsigned int>(time(nullptr)));
+
     while (currentState != GameState::Quit)
     {
-        srand(time(nullptr));
+        
         switch (currentState)
         {
         case GameState::Town:

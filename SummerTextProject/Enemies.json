@@ -2,24 +2,28 @@
   {
     "name": "Goblin",
     "health": 10,
+    "maxHealth": 10,
     "attack": 3,
     "gold": 5
   },
   {
     "name": "Ogre",
     "health": 20,
+    "maxHealth": 20,
     "attack": 5,
     "gold": 10
   },
   {
     "name": "Demon",
     "health": 15,
+    "maxHealth": 15,
     "attack": 7,
     "gold": 12
   },
   {
     "name": "Slime",
     "health": 5,
+    "maxHealth": 5,
     "attack": 1,
     "gold": 3
   }
